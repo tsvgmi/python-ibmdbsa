@@ -343,7 +343,7 @@ class DB2Compiler(compiler.SQLCompiler):
         return "mod(%s, %s)" % (self.process(binary.left),
                                                 self.process(binary.right))
 
-    def limit_clause(self, select):
+    def limit_clause(self, select, **kw):
         if (select._limit is not None) and (select._offset is None):
             return " FETCH FIRST %s ROWS ONLY" % select._limit
         else:
@@ -441,7 +441,7 @@ class DB2Compiler(compiler.SQLCompiler):
         else:
             return self.process(cast.clause)
 
-    def get_select_precolumns(self, select):
+    def get_select_precolumns(self, select, **kw):
         if isinstance(select._distinct, basestring):
             return select._distinct.upper() + " "
         elif select._distinct:
